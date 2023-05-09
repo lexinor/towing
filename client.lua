@@ -1,5 +1,5 @@
 RegisterCommand('deployramp', function ()
-    local player = PlayerPedId()
+    local player = cache.ped or PlayerPedId()
     local playerCoords = GetEntityCoords(player)
     local radius = 5.0
 
@@ -30,7 +30,7 @@ RegisterCommand('deployramp', function ()
 end)
 
 RegisterCommand('ramprm', function()
-    local player = PlayerPedId()
+    local player = cache.ped or PlayerPedId()
     local playerCoords = GetEntityCoords(player)
 
     local object = GetClosestObjectOfType(playerCoords.x, playerCoords.y, playerCoords.z, 5.0, RampHash, false, 0, 0)
@@ -47,7 +47,7 @@ RegisterCommand('ramprm', function()
 end)
 
 RegisterCommand('attach', function()
-    local player = PlayerPedId()
+    local player = cache.ped or PlayerPedId()
     local vehicle = nil
 
     if IsPedInAnyVehicle(player, false) then
@@ -80,7 +80,7 @@ RegisterCommand('attach', function()
 end)
 
 RegisterCommand('detach', function()
-    local player = PlayerPedId()
+    local player = cache.ped or PlayerPedId()
     local vehicle = nil
 
     if IsPedInAnyVehicle(player, false) then
@@ -101,7 +101,7 @@ RegisterCommand('detach', function()
 end)
 
 function getClosestVehicle(coords)
-    local ped = PlayerPedId()
+    local ped = cache.ped or PlayerPedId()
     local vehicles = GetGamePool('CVehicle')
     local closestDistance = -1
     local closestVehicle = -1
@@ -123,7 +123,7 @@ function getClosestVehicle(coords)
 end
 
 function GetVehicleBelowMe(cFrom, cTo) -- Function to get the vehicle under me
-    local rayHandle = CastRayPointToPoint(cFrom.x, cFrom.y, cFrom.z, cTo.x, cTo.y, cTo.z, 10, PlayerPedId(), 0) -- Sends raycast under me
+    local rayHandle = CastRayPointToPoint(cFrom.x, cFrom.y, cFrom.z, cTo.x, cTo.y, cTo.z, 10, cache.ped or PlayerPedId(), 0) -- Sends raycast under me
     local _, _, _, _, vehicle = GetRaycastResult(rayHandle) -- Stores the vehicle under me
     return vehicle -- Returns the vehicle under me
 end
