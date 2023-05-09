@@ -1,0 +1,12 @@
+{
+    "success.rampdeployed": "La rampe a été déployée",
+    "success.rampremoved": "La rampe a été correctement rangée",
+    "success.vehicleattched": "Véhicule correctement attaché",
+    "success.vehicledetched": "Le véhicule a été détaché avec succès",
+    "error.rampremove": "Sortez de votre véhicule ou rapprochez-vous de la rampe",
+    "error.cantdeployramp": "Vous ne pouvez déployer de rampe pour ce véhicule",
+    "error.notinvehicle": "Vous n'êtes pas dans un véhicule.",
+    "error.notdriver": "Vous n'êtes pas le conducteur",
+    "error.alreadyattached": "Véhicule déjà attaché",
+    "error.notattached": "Le véhicule n'est pas attaché"
+}

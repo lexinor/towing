@@ -1,0 +1,12 @@
+{
+    "success.rampdeployed": "Ramp has been deployed.",
+    "success.rampremoved": "Ramp removed successfully.",
+    "success.vehicleattched": "Vehicle attached properly.",
+    "success.vehicledetched": "The vehicle has been successfully detached.",
+    "error.rampremove": "Get out of your vehicle or get closer to the ramp.",
+    "error.cantdeployramp": "You can't deploy a ramp for this vehicle.",
+    "error.notinvehicle": "You're not in a vehicle.",
+    "error.notdriver": "You are not in the driver seat.",
+    "error.alreadyattached": "Vehicle already attached.",
+    "error.notattached": "The vehicle isn't attached to anything."
+}

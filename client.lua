@@ -1,3 +1,5 @@
+lib.locale()
+
 RegisterCommand('deployramp', function ()
     local player = cache.ped or PlayerPedId()
     local playerCoords = GetEntityCoords(player)
@@ -11,7 +13,7 @@ RegisterCommand('deployramp', function ()
 
         drawNotification("Trying to deploy a ramp for: " .. vehicleName)
 
-        if contains(vehicleName, Config.whitelist) then
+        if Contains(vehicleName, Config.whitelist) then
             local vehicleCoords = GetEntityCoords(vehicle)
 
             for _, value in pairs(Config.offsets) do
@@ -21,10 +23,10 @@ RegisterCommand('deployramp', function ()
                 end
             end
 
-            drawNotification("Ramp has been deployed.")
+            drawNotification(locale("success.rampdeployed"))
             return
         end
-        drawNotification("You can't deploy a ramp for this vehicle.")
+        drawNotification(locale("error.cantdeployramp"))
         return
     end
 end)
@@ -38,12 +40,12 @@ RegisterCommand('ramprm', function()
     if not IsPedInAnyVehicle(player, false) then
         if GetHashKey(RampHash) == GetEntityModel(object) then
             DeleteObject(object)
-            drawNotification("Ramp removed successfully.")
+            drawNotification(locale("success.rampremoved"))
             return
         end
     end
 
-    drawNotification("Get out of your vehicle or get closer to the ramp.")
+    drawNotification(locale("error.rampremove"))
 end)
 
 RegisterCommand('attach', function()
@@ -65,18 +67,18 @@ RegisterCommand('attach', function()
             local vehiclePitch = vehicleRotation.x - vehicleBelowRotation.x
             local vehicleYaw = vehicleRotation.z - vehicleBelowRotation.z
 
-            if contains(vehicleBelowName, Config.whitelist) then
+            if Contains(vehicleBelowName, Config.whitelist) then
                 if not IsEntityAttached(vehicle) then
                     AttachEntityToEntity(vehicle, belowEntity, GetEntityBoneIndexByName(belowEntity, 'chassis'), vehiclesOffset, vehiclePitch, 0.0, vehicleYaw, false, false, true, false, 0, true)
-                    return drawNotification('Vehicle attached properly.')
+                    return drawNotification(locale('success.vehicleattched'))
                 end
-                return drawNotification('Vehicle already attached.')
+                return drawNotification(locale('error.alreadyattached'))
             end
             return drawNotification('Can\'t attach to this entity: ' .. vehicleBelowName)
         end
-        return drawNotification('Not in driver seat.')
+        return drawNotification(locale('error.notdriver'))
     end
-    drawNotification('You\'re not in a vehicle.')
+    drawNotification(locale('error.notinvehicle'))
 end)
 
 RegisterCommand('detach', function()
@@ -88,15 +90,15 @@ RegisterCommand('detach', function()
         if GetPedInVehicleSeat(vehicle, -1) == player then
             if IsEntityAttached(vehicle) then
                 DetachEntity(vehicle, false, true)
-                return drawNotification('The vehicle has been successfully detached.')
+                return drawNotification(locale('success.vehicledetched'))
             else
-                return drawNotification('The vehicle isn\'t attached to anything.')
+                return drawNotification(locale("error.notattached"))
             end
         else
-            return drawNotification('You are not in the driver seat.')
+            return drawNotification(locale('error.notdriver'))
         end
     else
-        return drawNotification('You are not in a vehicle.')
+        return drawNotification(locale('error.notinvehicle'))
     end
 end)
 
@@ -128,7 +130,7 @@ function GetVehicleBelowMe(cFrom, cTo) -- Function to get the vehicle under me
     return vehicle -- Returns the vehicle under me
 end
 
-function contains(item, list)
+function Contains(item, list)
     for _, value in ipairs(list) do
         if value == item then return true end
     end
@@ -140,3 +142,12 @@ function drawNotification(text)
 	AddTextComponentString(text)
 	DrawNotification(true, false)
 end
+
+CreateThread(function ()
+    for k, action in pairs(Config.QuickActions.vehicle) do
+        if action.isAuthorized then
+            exports.ox_target:removeGlobalVehicle(action.options[1].name)
+            exports.ox_target:addGlobalVehicle(action.options)
+        end
+    end
+end)
