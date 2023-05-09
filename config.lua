@@ -71,8 +71,7 @@ Config.QuickActions = {
                                     Entity(ramp).state:set("parentNetId", netId, true)
                                 end
                             end
-
-                            drawNotification("Ramp has been deployed.")
+                            drawNotification(locale("success.rampdeployed"))
                             Entity(data.entity).state:set("rampdeployed", true, true)
                         end
                     end,
@@ -99,7 +98,7 @@ Config.EntityTargetOption = {
                 if not IsPedInAnyVehicle(cache.ped or PlayerPedId(), false) then
                     if GetHashKey(RampHash) == GetEntityModel(data.entity) then                        
                         TriggerServerEvent("towing:rmramp", NetworkGetNetworkIdFromEntity(data.entity), Entity(data.entity).state.parentNetId)
-                        drawNotification("Ramp removed successfully.")
+                        drawNotification(locale("success.rampremoved"))
                     end
                 end
             end
